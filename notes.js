@@ -1,5 +1,6 @@
 let notesButton = document.querySelector('.add-btn')
 let messagesList = document.querySelector('.messages-list')
+let messageContainer = document.querySelector('.messages-container')
 
 
 let notes = []
@@ -7,19 +8,22 @@ let notes = []
 function addMessage() {
   notes.push(document.getElementById('note-input').value)
   
-  localStorage.setItem('noteList',JSON.stringify(notes))
+  localStorage.setItem('noteList',JSON.stringify(notes))  
 
+  getMessage()
+
+  window.location.reload()
+}
+
+function getMessage() {
   let notesList = localStorage.getItem('noteList')
   console.log(notesList.length)
   notesList = JSON.parse(notesList)
 
-  for(let i = 0; i < notesList.length; i++) {
-    let message = document.createElement('LI')
-    message.innerText = notesList[i]
-    message.classList = 'message'
-    messagesList.appendChild(message)
-  }
+
+  messagesList.innerHTML = notesList.map((notes) => {
+    return '<li>' + notes + '</li>'
+  }).join('')
 
   message.innerText = ""
-  
 }
